@@ -1,5 +1,7 @@
 package com.gerwld.reservation_system;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -8,6 +10,8 @@ import java.util.List;
 
 @RestController
 public class ReservationController {
+
+    private static final Logger log = LoggerFactory.getLogger(ReservationController.class);
 
     private final ReservationService reservationService;
 
@@ -20,13 +24,13 @@ public class ReservationController {
     public Reservation getReservationById(
             @PathVariable("id") Long id
             ) {
-        System.out.println("call: getReservationById");
+        log.info("Called getReservationById, id: "+id);
         return reservationService.getReservationById(id);
     }
 
     @GetMapping("/api/get")
     public List<Reservation> getAllReservations() {
-        System.out.println("call: getAllReservations");
+        log.info("Called getAllReservations");
         return reservationService.findAllReservations();
     }
 
