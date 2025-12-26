@@ -2,6 +2,8 @@ package com.gerwld.reservation_system;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,25 +19,30 @@ public class ReservationController {
     }
 
     @GetMapping("/api/reservations/{id}")
-    public Reservation getReservationById(
+    public ResponseEntity<Reservation> getReservationById(
             @PathVariable("id") Long id
             ) {
         log.info("Called getReservationById, id: "+id);
-        return reservationService.getReservationById(id);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(reservationService.getReservationById(id));
     }
 
     @GetMapping("/api/reservations")
-    public List<Reservation> getAllReservations() {
+    public ResponseEntity<List<Reservation>> getAllReservations() {
         log.info("Called getAllReservations");
-        return reservationService.findAllReservations();
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(reservationService.findAllReservations());
     }
 
     @PostMapping("/api/reservations")
-    public Reservation createReservation(
+    public ResponseEntity<Reservation> createReservation(
           @RequestBody Reservation reservationToCreate
     ) {
         log.info("Called createReservation");
-        return ReservationService.createReservation(reservationToCreate);
+       return ResponseEntity.status(HttpStatus.CREATED)
+               .header("test-header", "123")
+               .body(ReservationService.createReservation(reservationToCreate));
+        // return ReservationService.createReservation(reservationToCreate);
 
     }
 }
