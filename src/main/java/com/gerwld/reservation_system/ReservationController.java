@@ -58,14 +58,25 @@ public class ReservationController {
             @PathVariable Long id,
             @RequestBody Reservation reservationToUpdate
     ) {
+        log.info("Called updateReservation");
         return ResponseEntity.status(HttpStatus.OK)
                 .body(ReservationService.updateReservation(id, reservationToUpdate));
+    }
+
+    @PostMapping("/{id}/approve")
+    public ResponseEntity<Reservation> approveReservation(
+           @PathVariable Long id
+    ) {
+        log.info("Called approveReservation, id: " + id);
+        var reservation = reservationService.approveReservation(id);
+        return ResponseEntity.ok(reservation);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteReservation(
             @PathVariable("id") Long id
     ) {
+        log.info("Called deleteReservation");
         try {
             reservationService.deleteReservation(id);
             return ResponseEntity.ok().build();
