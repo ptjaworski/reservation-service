@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.time.LocalDate;
 
+// cущность для hibernate для того чтобы сохранять элементы в базу данных
 @Table(name = "reservations")
 @Entity
 public class ReservationEntity {
@@ -29,9 +30,16 @@ public class ReservationEntity {
     private ReservationStatus status;
 
     public ReservationEntity() {
-
+        // конструктор по умолчанию для Hibernate
     }
 
+    public ReservationEntity(Long userId, Long roomId, LocalDate startDate, LocalDate endDate, ReservationStatus status) {
+        this.userId = userId;
+        this.roomId = roomId;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.status = status;
+    }
 
     public void setId(Long id) {
         this.id = id;
